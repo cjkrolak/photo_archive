@@ -19,7 +19,7 @@ paths = ["s:\\ftp\\aleeracam",
          "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap"] # ,
          #"s:\\ftp\\meishkacam"]  meishka not working yet
 end_string = ".jpg"  # file type
-number_of_files = 30000  # maximum number of files to archive in one run, used to prevent infinite loops
+number_of_files = 50000  # maximum number of files to archive in one run, used to prevent infinite loops
 minimum_file_age = 60 * 60 * 24  * 30  # 30 days in seconds, files newer than this won't be archived
 
 def main():
@@ -76,7 +76,7 @@ def main():
         
     # final message
     stop_time = time.time()
-    elapsed_time_sec = stop_time - start_time
+    elapsed_time = stop_time - start_time
     print("%s of %s files archived in %s seconds" % (archive_count, file_count, elapsed_time))
 
 
