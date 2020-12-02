@@ -16,11 +16,11 @@ paths = ["s:\\ftp\\aleeracam",
          "s:\\ftp\\bigsandycam",
          "s:\\ftp\\bigsandylake",
          "s:\\ftp\\bigsandylake2_ftp\\FI9805W_C4D655303E56\\snap",
-         "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap"] # ,
-         #"s:\\ftp\\meishkacam"]  meishka not working yet
+         "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",  #] # ,
+         "s:\\ftp\\meishkacam"] # meishka not working yet
 end_string = ".jpg"  # file type
 number_of_files = 50000  # maximum number of files to archive in one run, used to prevent infinite loops
-minimum_file_age = 60 * 60 * 24  * 30  # 30 days in seconds, files newer than this won't be archived
+minimum_file_age = 60 * 60 * 24  * 14  # 14 days in seconds, files newer than this won't be archived
 
 def main():
     """
