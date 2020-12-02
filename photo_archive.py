@@ -1,0 +1,103 @@
+#!/usr/bin/env python
+
+"""
+script to automatically archive photograph files into folders by year and month
+to prevent folders from getting to large.
+
+Python 3.x script syntax
+"""
+import datetime
+import os
+import time
+
+# globals
+# paths is a list of folders to perform archiving on.
+paths = ["s:\\ftp\\aleeracam",
+         "s:\\ftp\\bigsandycam",
+         "s:\\ftp\\bigsandylake",
+         "s:\\ftp\\bigsandylake2_ftp",
+         "s:\\ftp\\bigsandyloft_ftp"] # ,
+         #"s:\\ftp\\meishkacam"]
+end_string = ".jpg"  # file type
+number_of_files = 30000  # maximum number of files to archive in one run, used to prevent infinite loops
+minimum_file_age = 60 * 60 * 24  * 30  # 30 days in seconds, files newer than this won't be archived
+
+def main():
+    """
+    Iterate over folders, archiving any file within these folders that meets the file age and file extension criteria.
+    """
+    archive_count = file_count = 0  # initialize counters
+    start_time = time.time()
+
+    # iterate through folders
+    for path in paths:
+        print("archiving files in folder '%s'..." % path)
+        # iterate through files
+        for entry in os.scandir(path):
+            # iterate through each file
+            if entry.path.endswith(end_string) and entry.is_file():
+                full_path = entry.path
+
+                # parse the file date for month and year
+                file_time = os.path.getmtime(full_path)
+                file_date = datetime.datetime.fromtimestamp(file_time)
+                month = file_date.strftime("%m")
+                year = file_date.strftime("%Y")
+                print("%s: file: %s, date: %s, month=%s, year=%s" %
+                      (file_count, full_path, file_date, month, year))
+                file_count += 1
+
+                # check file age
+                if not file_should_be_archived(file_time):
+                    print("skipping file: %s, not old enough to archive" % full_path)
+                    continue
+                else:
+                    archive_count += 1    
+
+                # create folder if needed
+                target_path = path + "\\" + str(year) + "\\" + str(month)
+                if not os.path.isdir(target_path):
+                    os.mkdir(target_path)
+                    print("created new folder: %s" % target_path)
+                else:
+                    print("target path %s already exists" % target_path)
+                    pass
+
+                # move file
+                file_name = full_path.strip(path)
+                new_full_path = target_path + "\\" + file_name
+                print("new full path: %s" % new_full_path)
+                os.rename(full_path, new_full_path)
+
+                # exit at max number of files to prevent infinite loop            
+                if file_count >= number_of_files:
+                    print("reached maximum file scan count of %s, aborting run" % file_count)
+                    break
+        
+    # final message
+    stop_time = time.time()
+    elapsed_time_sec = stop_time - start_time
+    print("%s of %s files archived in %s seconds" % (archive_count, file_count, elapsed_time))
+
+
+def file_should_be_archived(file_timestamp):
+    """
+    Return True if file is old enough to be archived
+
+    inputs:
+        file_timestamp(float): datetime value of file
+    returns:
+        (bool) True if file exceeds limit
+    """
+    now = time.time()
+    if file_timestamp < now - minimum_file_age:
+        return True
+    else:
+        return False
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
+    print("archiving script is done")
+        
