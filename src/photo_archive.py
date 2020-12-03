@@ -16,8 +16,8 @@ paths = ["s:\\ftp\\aleeracam",
          "s:\\ftp\\bigsandycam",
          "s:\\ftp\\bigsandylake",
          "s:\\ftp\\bigsandylake2_ftp\\FI9805W_C4D655303E56\\snap",
-         "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",  #] # ,
-         "s:\\ftp\\meishkacam"] # meishka not working yet
+         "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",
+         "s:\\ftp\\meishkacam"]
 end_string = ".jpg"  # file type
 number_of_files = 50000  # maximum number of files to archive in one run, used to prevent infinite loops
 minimum_file_age = 60 * 60 * 24  * 14  # 14 days in seconds, files newer than this won't be archived
@@ -43,16 +43,15 @@ def main():
                 file_date = datetime.datetime.fromtimestamp(file_time)
                 month = file_date.strftime("%m")
                 year = file_date.strftime("%Y")
-                print("%s: file: %s, date: %s, month=%s, year=%s" %
-                      (file_count, full_path, file_date, month, year))
                 file_count += 1
 
                 # check file age
                 if not file_should_be_archived(file_time):
-                    print("skipping file: %s, not old enough to archive" % full_path)
+                    print("%s: skipping file: %s, not old enough to archive" % (file_count, full_path))
                     continue
                 else:
-                    archive_count += 1    
+                    archive_count += 1
+                    print("%s: archiving file: %s" % (file_count, full_path))
 
                 # create folders if needed
                 target_path = path + "\\" + str(year)
@@ -63,7 +62,6 @@ def main():
                 # move file
                 file_name = full_path.strip(path)
                 new_full_path = target_path + "\\" + file_name
-                print("new full path: %s" % new_full_path)
                 os.rename(full_path, new_full_path)
 
                 # exit at max number of files to prevent infinite loop            
@@ -73,8 +71,8 @@ def main():
         
     # final message
     stop_time = time.time()
-    elapsed_time = stop_time - start_time
-    print("%s of %s files archived in %s seconds" % (archive_count, file_count, elapsed_time))
+    elapsed_time_min = (stop_time - start_time) / 60
+    print("%s of %s files archived in %.1f minutes" % (archive_count, file_count, elapsed_time_min))
 
 
 def file_should_be_archived(file_timestamp):
