@@ -22,4 +22,5 @@ jobs:
         uses: github/super-linter@v3
         env:
           DEFAULT_BRANCH: master
+          FILTER_REGEX_INCLUDE: .*src/.*  
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
