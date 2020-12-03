@@ -54,14 +54,11 @@ def main():
                 else:
                     archive_count += 1    
 
-                # create folder if needed
+                # create folders if needed
+                target_path = path + "\\" + str(year)
+                create_folder_if_necesary(target_path)  # year folder
                 target_path = path + "\\" + str(year) + "\\" + str(month)
-                if not os.path.isdir(target_path):
-                    os.mkdir(target_path)
-                    print("created new folder: %s" % target_path)
-                else:
-                    print("target path %s already exists" % target_path)
-                    pass
+                create_folder_if_necesary(target_path)  # month sub-folder
 
                 # move file
                 file_name = full_path.strip(path)
@@ -94,6 +91,22 @@ def file_should_be_archived(file_timestamp):
         return True
     else:
         return False
+
+
+def create_folder_if_necesary(target_path):
+    """
+    Create the target folder if it doesn't already exist
+
+    inputs:
+        target_path(str): target folder to create
+    returns:
+        None
+    """
+    if not os.path.isdir(target_path):
+        os.mkdir(target_path)
+        print("created new folder: %s" % target_path)
+    else:
+        pass
 
 
 if __name__ == "__main__":
