@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 script to automatically archive photograph files into folders by year and month
@@ -43,6 +43,8 @@ def main():
                 file_date = datetime.datetime.fromtimestamp(file_time)
                 month = file_date.strftime("%m")
                 year = file_date.strftime("%Y")
+                # print("%s: file: %s, date: %s, month=%s, year=%s" %
+                #      (file_count, full_path, file_date, month, year))
                 file_count += 1
 
                 # check file age
