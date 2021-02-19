@@ -12,12 +12,14 @@ import time
 
 # globals
 # paths is a list of folders to perform archiving on.
-paths = ["s:\\ftp\\aleeracam",
-         "s:\\ftp\\bigsandycam",
-         "s:\\ftp\\bigsandylake",
-         "s:\\ftp\\bigsandylake2_ftp\\FI9805W_C4D655303E56\\snap",
-         "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",
-         "s:\\ftp\\meishkacam"]
+paths = [
+    "s:\\ftp\\aleeracam",
+    "s:\\ftp\\bigsandycam",
+    "s:\\ftp\\bigsandylake",
+    "s:\\ftp\\bigsandylake2_ftp\\FI9805W_C4D655303E56\\snap",
+    "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",
+    "s:\\ftp\\meishkacam",
+]
 end_string = ".jpg"  # file type
 number_of_files = 50000  # maximum number of files to archive in one run,
 #                          used to prevent infinite loops
@@ -53,8 +55,10 @@ def main():
 
                 # check file age
                 if not file_should_be_archived(file_time):
-                    print("%s: skipping file: %s, not old enough to archive" %
-                          (file_count, full_path))
+                    print(
+                        "%s: skipping file: %s, not old enough to archive"
+                        % (file_count, full_path)
+                    )
                     continue
                 else:
                     archive_count += 1
@@ -73,15 +77,19 @@ def main():
 
                 # exit at max number of files to prevent infinite loop
                 if file_count >= number_of_files:
-                    print("reached maximum file scan count of %s,"
-                          " aborting run" % file_count)
+                    print(
+                        "reached maximum file scan count of %s,"
+                        " aborting run" % file_count
+                    )
                     break
 
     # final message
     stop_time = time.time()
     elapsed_time_min = (stop_time - start_time) / 60
-    print("%s of %s files archived in %.1f minutes" %
-          (archive_count, file_count, elapsed_time_min))
+    print(
+        "%s of %s files archived in %.1f minutes"
+        % (archive_count, file_count, elapsed_time_min)
+    )
 
 
 def file_should_be_archived(file_timestamp):
