@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 script to automatically archive photograph files into folders by year and month
@@ -12,19 +12,25 @@ import time
 
 # globals
 # paths is a list of folders to perform archiving on.
-paths = ["s:\\ftp\\aleeracam",
-         "s:\\ftp\\bigsandycam",
-         "s:\\ftp\\bigsandylake",
-         "s:\\ftp\\bigsandylake2_ftp\\FI9805W_C4D655303E56\\snap",
-         "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",
-         "s:\\ftp\\meishkacam"]
+paths = [
+    "s:\\ftp\\aleeracam",
+    "s:\\ftp\\bigsandycam",
+    "s:\\ftp\\bigsandylake",
+    "s:\\ftp\\bigsandylake2_ftp\\FI9805W_C4D655303E56\\snap",
+    "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",
+    "s:\\ftp\\meishkacam",
+]
 end_string = ".jpg"  # file type
-number_of_files = 50000  # maximum number of files to archive in one run, used to prevent infinite loops
-minimum_file_age = 60 * 60 * 24  * 14  # 14 days in seconds, files newer than this won't be archived
+number_of_files = 50000  # maximum number of files to archive in one run,
+#                          used to prevent infinite loops
+minimum_file_age = 60 * 60 * 24 * 14  # 14 days in seconds,
+#                                       files newer than this won't be archived
+
 
 def main():
     """
-    Iterate over folders, archiving any file within these folders that meets the file age and file extension criteria.
+    Iterate over folders, archiving any file within these folders that meets
+    the file age and file extension criteria.
     """
     archive_count = file_count = 0  # initialize counters
     start_time = time.time()
@@ -43,11 +49,16 @@ def main():
                 file_date = datetime.datetime.fromtimestamp(file_time)
                 month = file_date.strftime("%m")
                 year = file_date.strftime("%Y")
+                # print("%s: file: %s, date: %s, month=%s, year=%s" %
+                #      (file_count, full_path, file_date, month, year))
                 file_count += 1
 
                 # check file age
                 if not file_should_be_archived(file_time):
-                    print("%s: skipping file: %s, not old enough to archive" % (file_count, full_path))
+                    print(
+                        "%s: skipping file: %s, not old enough to archive"
+                        % (file_count, full_path)
+                    )
                     continue
                 else:
                     archive_count += 1
@@ -64,15 +75,21 @@ def main():
                 new_full_path = target_path + "\\" + file_name
                 os.rename(full_path, new_full_path)
 
-                # exit at max number of files to prevent infinite loop            
+                # exit at max number of files to prevent infinite loop
                 if file_count >= number_of_files:
-                    print("reached maximum file scan count of %s, aborting run" % file_count)
+                    print(
+                        "reached maximum file scan count of %s,"
+                        " aborting run" % file_count
+                    )
                     break
-        
+
     # final message
     stop_time = time.time()
     elapsed_time_min = (stop_time - start_time) / 60
-    print("%s of %s files archived in %.1f minutes" % (archive_count, file_count, elapsed_time_min))
+    print(
+        "%s of %s files archived in %.1f minutes"
+        % (archive_count, file_count, elapsed_time_min)
+    )
 
 
 def file_should_be_archived(file_timestamp):
@@ -111,4 +128,3 @@ if __name__ == "__main__":
     # execute only if run as a script
     main()
     print("archiving script is done")
-        
