@@ -23,7 +23,7 @@ paths = [
 end_string = ".jpg"  # file type
 number_of_files = 50000  # maximum number of files to archive in one run,
 #                          used to prevent infinite loops
-minimum_file_age = 60 * 60 * 24 * 14  # 14 days in seconds,
+minimum_file_age = 60 * 60 * 24 * 7  # 7 days in seconds,
 #                                       files newer than this won't be archived
 
 
