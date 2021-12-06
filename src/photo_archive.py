@@ -62,7 +62,9 @@ def main():
                     continue
                 else:
                     archive_count += 1
-                    print("%s: archiving file: %s" % (file_count, full_path))
+                    print("%s: archiving file: %s - (%d days old)" %
+                          (file_count, full_path, ((time.time() - file_time)
+                                                   / 60 / 60 / 24)))
 
                 # create folders if needed
                 target_path = path + "\\" + str(year)
