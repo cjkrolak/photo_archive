@@ -54,27 +54,32 @@ def main():
                 file_count += 1
 
                 # check file age
+                days_old = (time.time() - file_time) / 60 / 60 / 24
                 if not file_should_be_archived(file_time):
                     print(
-                        "%s: skipping file: %s, not old enough to archive"
-                        % (file_count, full_path)
+                        "%s: skipping file: %s, not old enough to archive "
+                        "(%d days old)"
+                        % (file_count, full_path, days_old)
                     )
                     continue
                 else:
                     archive_count += 1
-                    print("%s: archiving file: %s - (%d days old)" %
-                          (file_count, full_path, ((time.time() - file_time)
-                                                   / 60 / 60 / 24)))
 
                 # create folders if needed
-                target_path = path + "\\" + str(year)
+                subfolder = "\\" + str(year)
+                target_path = path + "\\" + subfolder
                 create_folder_if_necesary(target_path)  # year folder
-                target_path = path + "\\" + str(year) + "\\" + str(month)
+                subfolder = subfolder + "\\" + str(month)
+                target_path = path + subfolder
                 create_folder_if_necesary(target_path)  # month sub-folder
 
-                # move file
+                # create new filename
                 file_name = full_path.strip(path)
                 new_full_path = target_path + "\\" + file_name
+
+                # move file
+                print("%s: archiving file: %s -> %s, (%d days old)" %
+                      (file_count, full_path, subfolder, days_old))
                 os.rename(full_path, new_full_path)
 
                 # exit at max number of files to prevent infinite loop
