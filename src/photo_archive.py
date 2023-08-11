@@ -58,8 +58,7 @@ def main():
                 if not file_should_be_archived(file_time):
                     print(
                         "%s: skipping file: %s, not old enough to archive "
-                        "(%d days old)"
-                        % (file_count, full_path, days_old)
+                        "(%d days old)" % (file_count, full_path, days_old)
                     )
                     continue
                 else:
@@ -78,8 +77,10 @@ def main():
                 new_full_path = target_path + "\\" + file_name
 
                 # move file
-                print("%s: archiving file: %s -> %s, (%d days old)" %
-                      (file_count, full_path, subfolder, days_old))
+                print(
+                    "%s: archiving file: %s -> %s, (%d days old)"
+                    % (file_count, full_path, subfolder, days_old)
+                )
                 os.rename(full_path, new_full_path)
 
                 # exit at max number of files to prevent infinite loop
