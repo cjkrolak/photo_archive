@@ -3,6 +3,8 @@ name: Super-Linter
 # Run this workflow every time a new commit pushed to your repository
 on: push
 
+permissions: {}
+
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
@@ -11,6 +13,12 @@ jobs:
     name: Lint code base
     # Set the type of machine to run on
     runs-on: ubuntu-latest
+
+    permissions:
+        contents: read
+        packages: read
+        # To report GitHub Actions status checks
+        statuses: write
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
@@ -23,7 +31,7 @@ jobs:
 
       # Runs the Super-Linter action
       - name: Run Super-Linter
-        uses: super-linter/super-linter@v6
+        uses: super-linter/super-linter@v7
         env:
           DEFAULT_BRANCH: ${{ env.branchname }}
           FILTER_REGEX_INCLUDE: .*src/.*  
