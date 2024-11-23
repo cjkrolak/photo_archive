@@ -20,10 +20,10 @@ paths = [
     "s:\\ftp\\bigsandyloft_ftp\\FI9821P_C4D6553D93AE\\snap",
     "s:\\ftp\\meishkacam",
 ]
-end_string = ".jpg"  # file type
-number_of_files = 50000  # maximum number of files to archive in one run,
+END_STRING = ".jpg"  # file type
+NUMBER_OF_FILES = 50000  # maximum number of files to archive in one run,
 #                          used to prevent infinite loops
-minimum_file_age = 60 * 60 * 24 * 7  # 7 days in seconds,
+MINIMUM_FILE_AGE = 60 * 60 * 24 * 7  # 7 days in seconds,
 #                                       files newer than this won't be archived
 
 
@@ -32,16 +32,17 @@ def main():
     Iterate over folders, archiving any file within these folders that meets
     the file age and file extension criteria.
     """
+    # pylint: disable=too-many-locals
     archive_count = file_count = 0  # initialize counters
     start_time = time.time()
 
     # iterate through folders
     for path in paths:
-        print("archiving files in folder '%s'..." % path)
+        print(f"archiving files in folder '{path}'...")
         # iterate through files
         for entry in os.scandir(path):
             # iterate through each file
-            if entry.path.endswith(end_string) and entry.is_file():
+            if entry.path.endswith(END_STRING) and entry.is_file():
                 full_path = entry.path
 
                 # parse the file date for month and year
@@ -57,12 +58,11 @@ def main():
                 days_old = (time.time() - file_time) / 60 / 60 / 24
                 if not file_should_be_archived(file_time):
                     print(
-                        "%s: skipping file: %s, not old enough to archive "
-                        "(%d days old)" % (file_count, full_path, days_old)
+                        f"{file_count}: skipping file: {full_path}, not old enough to archive "
+                        f"({days_old:.1f} days old)"
                     )
                     continue
-                else:
-                    archive_count += 1
+                archive_count += 1
 
                 # create folders if needed
                 subfolder = "\\" + str(year)
@@ -78,16 +78,15 @@ def main():
 
                 # move file
                 print(
-                    "%s: archiving file: %s -> %s, (%d days old)"
-                    % (file_count, full_path, subfolder, days_old)
+                    f"{file_count}: archiving file: {full_path} -> {subfolder}, "
+                    f"({days_old:.1f} days old)"
                 )
                 os.rename(full_path, new_full_path)
 
                 # exit at max number of files to prevent infinite loop
-                if file_count >= number_of_files:
+                if file_count >= NUMBER_OF_FILES:
                     print(
-                        "reached maximum file scan count of %s,"
-                        " aborting run" % file_count
+                        f"reached maximum file scan count of {file_count}, aborting run"
                     )
                     break
 
@@ -95,8 +94,7 @@ def main():
     stop_time = time.time()
     elapsed_time_min = (stop_time - start_time) / 60
     print(
-        "%s of %s files archived in %.1f minutes"
-        % (archive_count, file_count, elapsed_time_min)
+        f"{archive_count} of {file_count} files archived in {elapsed_time_min:.1f} minutes"
     )
 
 
@@ -110,10 +108,7 @@ def file_should_be_archived(file_timestamp):
         (bool) True if file exceeds limit
     """
     now = time.time()
-    if file_timestamp < now - minimum_file_age:
-        return True
-    else:
-        return False
+    return file_timestamp < now - MINIMUM_FILE_AGE
 
 
 def create_folder_if_necesary(target_path):
@@ -127,7 +122,7 @@ def create_folder_if_necesary(target_path):
     """
     if not os.path.isdir(target_path):
         os.mkdir(target_path)
-        print("created new folder: %s" % target_path)
+        print(f"created new folder: {target_path}")
     else:
         pass
 
