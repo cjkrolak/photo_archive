@@ -6,9 +6,15 @@ to prevent folders from getting to large.
 
 Python 3.x script syntax
 """
+
+# built-in modules
 import datetime
 import os
 import time
+
+# 3rd party modules
+
+# local modules
 
 # globals
 # paths is a list of folders to perform archiving on.
