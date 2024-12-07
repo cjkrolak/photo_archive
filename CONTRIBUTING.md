@@ -9,7 +9,7 @@ Future enhancements may include:
 # Ground Rules:
 1. Contributors are respectful, considerate, collaborative, and open-minded.
 2. Code is tested by author prior to pull requests.
-3. GitFlow process is followed: code is developed off of `main` branch tip, `main` branch should remain viable at all times.
+3. GitFlow process is followed: code is developed off of `master` branch tip, `master` branch should remain viable at all times.
 4. Developers warranty their contributions, and are responsible for resolving issues with it.  Code is reliable, and developers continuously strive to improve code reliability. 
 5. Standard conventions are followed, new code is consistent with incumbent code.  Python PEP8 style guide is followed.
 6. issue tickets are singular, descriptive and comprehensive.
@@ -21,13 +21,13 @@ Future enhancements may include:
 Check the issue backlog for issues of interest, or create your own issue.  Look for issues tagged with the "good first issue" tag.
 
 1. Fork the repo.
-2. Create feature branch in your fork, off of `main`, name the branch with issue # and descriptive title, e.g. "33_fix_set_mode_bug_in_thermostat_x".
+2. Create feature branch in your fork, off of `master`, name the branch with issue # and descriptive title, e.g. "33_fix_set_mode_bug_in_thermostat_x".
 3. Write code, test code, rework code as needed.
 4. Commit code to feature branch, add descriptive comments to pull request message: 1. description of fix, 2. test results summary.
-5. Submit pull request back to `main` branch of this project.  Add relevant reviewers to the pull request for code review.
+5. Submit pull request back to `master` branch of this project.  Add relevant reviewers to the pull request for code review.
 
 # Getting started:
 1. Install python3 and any dependencies listed in the readme file.
-2. fork the repo, use `main` branch for your training.
+2. fork the repo, use `master` branch for your training.
 3. setup any required envirenment variables (see readme for details).
 4. run code.
