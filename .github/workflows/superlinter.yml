@@ -23,7 +23,7 @@ jobs:
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Get Branch Name
         run: |
           branchname=$(git rev-parse --abbrev-ref HEAD)
